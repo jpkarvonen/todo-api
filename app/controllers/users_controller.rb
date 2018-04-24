@@ -1,6 +1,6 @@
 class Api::UsersController < ApiController
-    before_action :authenticated?
-    
+    before_action :authenticate_user
+
     def index
         render json: users, each_serializer: UserSerializer
     end

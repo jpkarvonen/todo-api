@@ -1,8 +1,10 @@
 class Api::ListsController < ApiController
-  before_action :authenticated?
+  before_action :authenticate_user
  
   def create
-    list = List.new(params[:list])
+    list = List.new(list_params)
+    user = User.find(params[:user_id])
+    list.user = user
     if list.save
       render json: list
     else
@@ -12,7 +14,7 @@ class Api::ListsController < ApiController
   
   def destroy
     begin 
-      list = List.find(params[:id])
+      list = current_user.lists.find(params[:id])
       list.destroy
       render json: {}, status: :no_content
     rescue ActiveRecord::RecordNotFound
@@ -27,6 +29,11 @@ class Api::ListsController < ApiController
     else
       render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+  
+  private
+  def list_params
+    params.require(:list).permit(:name, :private)
   end
  
 end
