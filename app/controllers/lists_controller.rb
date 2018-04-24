@@ -2,8 +2,8 @@ class Api::ListsController < ApiController
   before_action :authenticate_user
   
   def index
-        render json: lists, each_serializer: ListSerializer
-    end
+    render json: lists, each_serializer: ListSerializer
+  end
  
   def create
     list = List.new(list_params)

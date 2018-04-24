@@ -2,8 +2,8 @@ class Api::ItemsController < ApiController
   before_action :authenticate_user
   
   def index
-        render json: items, each_serializer: ItemSerializer
-    end
+    render json: items, each_serializer: ItemSerializer
+  end
  
   def create
     item = Item.new(item_params)
