@@ -23,7 +23,7 @@ class Api::ListsController < ApiController
   end
   
   def update
-    list = List.find(params[:id])
+    list = current_user.lists.find(params[:id])
     if list.update(list_params)
       render json: list
     else
